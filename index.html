@@ -2,314 +2,530 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<title>Science Quiz - พร้อมเฉลยละเอียด</title>
-<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+<title>Science Quiz</title>
+
 <style>
-/* ===== RESET & BASE ===== */
+
+/* ===== RESET ===== */
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Kanit',sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Kanit',sans-serif;
 }
 
+/* ===== BODY ===== */
 body{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:linear-gradient(135deg,#0f172a,#020617);
-    color:white;
-    padding: 20px;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+
+background:linear-gradient(135deg,#0f172a,#020617);
+color:white;
 }
 
 /* ===== MAIN CONTAINER ===== */
 .container{
-    width:650px;
-    max-width:100%;
-    background:rgba(255,255,255,0.05);
-    backdrop-filter:blur(15px);
-    padding:40px;
-    border-radius:20px;
-    box-shadow:0 10px 40px rgba(0,0,0,0.5);
-    animation:fadeIn 0.6s ease;
+width:650px;
+max-width:92%;
+max-height: 95vh;
+overflow-y: auto;
+
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(15px);
+
+padding:40px;
+border-radius:20px;
+
+box-shadow:0 10px 40px rgba(0,0,0,0.5);
+
+animation:fadeIn 0.6s ease;
 }
 
-h1{ text-align:center; font-size:32px; margin-bottom:25px; }
-h2{ margin-bottom:20px; line-height: 1.4; }
-h3{ margin-bottom:10px; color:#cbd5f5; }
+/* ===== TITLES ===== */
+h1{
+text-align:center;
+font-size:32px;
+margin-bottom:25px;
+}
 
-/* ===== BUTTONS ===== */
+h2{
+margin-bottom:20px;
+line-height: 1.4;
+}
+
+h3{
+margin-bottom:10px;
+color:#cbd5f5;
+}
+
+/* ===== MENU BUTTON ===== */
 .menuBtn{
-    background:linear-gradient(45deg,#6366f1,#4f46e5);
-    color:white;
-    border:none;
-    padding:14px 24px;
-    margin:10px 5px;
-    border-radius:12px;
-    font-size:17px;
-    font-weight:600;
-    cursor:pointer;
-    transition:all 0.25s ease;
+
+background:linear-gradient(45deg,#6366f1,#4f46e5);
+
+color:white;
+border:none;
+
+padding:14px 24px;
+margin:10px;
+
+border-radius:12px;
+
+font-size:17px;
+font-weight:600;
+
+cursor:pointer;
+
+transition:all 0.25s ease;
+
 }
 
-.menuBtn:hover:not(:disabled){
-    transform:translateY(-3px) scale(1.05);
-    box-shadow:0 10px 25px rgba(99,102,241,0.6);
+.menuBtn:hover{
+
+transform:translateY(-3px) scale(1.05);
+
+box-shadow:0 10px 25px rgba(99,102,241,0.6);
+
 }
 
-.menuBtn:disabled {
-    background: #475569;
-    cursor: not-allowed;
-    opacity: 0.6;
-}
-
-/* ===== QUIZ CHOICES ===== */
+/* ===== QUESTION CHOICE ===== */
 .choice{
-    display:block;
-    width:100%;
-    background:rgba(255,255,255,0.05);
-    border:2px solid rgba(255,255,255,0.08);
-    padding:16px;
-    border-radius:12px;
-    margin:12px 0;
-    font-size:16px;
-    color:white;
-    cursor:pointer;
-    text-align: left;
-    transition:all 0.2s ease;
+
+display:block;
+width:100%;
+
+background:rgba(255,255,255,0.05);
+
+border:2px solid rgba(255,255,255,0.08);
+
+padding:16px;
+
+border-radius:12px;
+
+margin:12px 0;
+
+font-size:16px;
+
+color:white;
+text-align: left;
+cursor:pointer;
+
+transition:all 0.25s ease;
+
 }
 
-.choice:hover:not(.locked){
-    background:rgba(99,102,241,0.15);
-    border-color:#6366f1;
+/* hover effect */
+.choice:not(:disabled):hover{
+
+background:rgba(99,102,241,0.15);
+
+border-color:#6366f1;
+
+transform:translateY(-2px) scale(1.02);
+
+box-shadow:0 8px 20px rgba(0,0,0,0.35);
+
 }
 
-.choice.selected{ border-color:#facc15; background:rgba(250,204,21,0.1); }
-.choice.correct{ background:#22c55e !important; border-color:#22c55e !important; color: white; }
-.choice.wrong{ background:#ef4444 !important; border-color:#ef4444 !important; color: white; }
+/* selected */
+.choice.selected{
+
+border-color:#facc15;
+
+background:rgba(250,204,21,0.15);
+
+}
+
+/* correct */
+.correct{
+
+background:#22c55e !important;
+
+border-color:#22c55e !important;
+
+}
+
+/* wrong */
+.wrong{
+
+background:#ef4444 !important;
+
+border-color:#ef4444 !important;
+
+}
+
+/* Disabled state */
+.choice:disabled {
+cursor: default;
+}
 
 /* ===== EXPLANATION BOX ===== */
 #explanationBox {
-    margin-top: 20px;
-    padding: 20px;
-    background: rgba(99, 102, 241, 0.1);
-    border-left: 4px solid #6366f1;
-    border-radius: 8px;
-    display: none;
-    animation: slideIn 0.4s ease;
+background: rgba(34, 197, 94, 0.1);
+border-left: 4px solid #4ade80;
+padding: 16px;
+margin-top: 20px;
+margin-bottom: 20px;
+border-radius: 8px;
+animation: fadeIn 0.4s ease;
 }
 
-#explanationBox b { color: #facc15; }
+#explanationBox h4 {
+color: #4ade80;
+margin-bottom: 8px;
+font-size: 18px;
+}
+
+#explanationText {
+font-size: 15px;
+color: #e2e8f0;
+line-height: 1.5;
+}
+
+
+/* ===== GAME BUTTON ===== */
+button{
+
+cursor:pointer;
+
+}
 
 /* ===== PROGRESS BAR ===== */
-.progress{ width:100%; height:12px; background:rgba(255,255,255,0.08); border-radius:20px; margin-bottom:25px; overflow:hidden; }
-.progress-bar{ height:100%; width:0%; background:linear-gradient(90deg,#22c55e,#4ade80); transition:width 0.4s ease; }
+.progress{
 
-/* ===== UTILITIES ===== */
-.hidden{ display:none; }
-@keyframes fadeIn{ from{opacity:0; transform:translateY(15px);} to{opacity:1; transform:translateY(0);} }
-@keyframes slideIn{ from{opacity:0; transform:translateX(-10px);} to{opacity:1; transform:translateX(0);} }
+width:100%;
+height:12px;
+
+background:rgba(255,255,255,0.08);
+
+border-radius:20px;
+
+margin-bottom:25px;
+
+overflow:hidden;
+
+}
+
+.progress-bar{
+
+height:100%;
+
+width:0%;
+
+background:linear-gradient(90deg,#22c55e,#4ade80);
+
+transition:width 0.4s ease;
+
+}
+
+/* ===== RESULT ===== */
+#result h1{
+
+font-size:36px;
+
+margin-top:20px;
+
+}
+
+/* ===== HIDDEN ===== */
+.hidden{
+
+display:none !important;
+
+}
+
+/* ===== ANIMATION ===== */
+@keyframes fadeIn{
+
+from{
+opacity:0;
+transform:translateY(15px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+.fade{
+animation:fade 0.3s ease;
+}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(10px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.4); }
 
 </style>
 </head>
+
+
 <body>
 
 <div class="container">
-    <div id="menu">
-        <h1>Science Quiz</h1>
-        <p style="text-align:center; margin-bottom:20px; color:#94a3b8;">เลือกวิชาที่ต้องการทดสอบ (25 ข้อ)</p>
-        <div style="display:flex; justify-content:center;">
-            <button class="menuBtn" onclick="startGame('physics')">ฟิสิกส์</button>
-            <button class="menuBtn" onclick="startGame('chemistry')">เคมี</button>
-        </div>
-    </div>
 
-    <div id="game" class="hidden">
-        <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
-        <h3 id="questionNumber"></h3>
-        <h2 id="questionText"></h2>
-        <div id="choices"></div>
+<div id="menu">
 
-        <div id="explanationBox">
-            <h3>💡 คำอธิบาย:</h3>
-            <p id="explanationText"></p>
-        </div>
+<h1>Science Quiz</h1>
 
-        <div style="margin-top:20px; text-align:right;">
-            <button id="checkBtn" class="menuBtn" onclick="checkAnswer()">ตรวจสอบคำตอบ</button>
-            <button id="nextBtn" class="menuBtn hidden" onclick="nextQuestion()">ข้อต่อไป</button>
-        </div>
-    </div>
-
-    <div id="result" class="hidden">
-        <h2 id="subjectText"></h2>
-        <h1 id="finalScore"></h1>
-        <button class="menuBtn" onclick="location.reload()">เล่นใหม่</button>
-    </div>
+<div style="text-align: center;">
+<button class="menuBtn" onclick="startGame('physics')">ฟิสิกส์</button>
+<button class="menuBtn" onclick="startGame('chemistry')">เคมี</button>
 </div>
 
+</div>
+
+
+
+<div id="game" class="hidden">
+
+<div class="progress">
+<div id="progressBar" class="progress-bar"></div>
+</div>
+
+<h3 id="questionNumber"></h3>
+<h2 id="questionText"></h2>
+
+<div id="choices"></div>
+
+<div id="explanationBox" class="hidden">
+<h4>💡 คำอธิบาย:</h4>
+<p id="explanationText"></p>
+</div>
+
+<div style="text-align: right; margin-top: 15px;">
+<button id="checkBtn" class="menuBtn" onclick="checkAnswer()">ตรวจสอบคำตอบ</button>
+<button id="nextBtn" class="menuBtn hidden" onclick="nextQuestion()">ไปข้อต่อไป ➔</button>
+</div>
+
+</div>
+
+
+
+<div id="result" class="hidden" style="text-align: center;">
+
+<h2 id="subjectText"></h2>
+<h1 id="finalScore"></h1>
+<br>
+<button class="menuBtn" onclick="location.reload()">เล่นใหม่</button>
+
+</div>
+
+</div>
+
+
+
 <script>
-let subject = "";
-let shuffled = [];
-let current = 0;
-let score = 0;
-let selected = null;
-let isAnswered = false;
 
-// Physics Data with Explanations
-const physicsQuestions = [
-    {q:"หน่วยของแรงในระบบ SI คืออะไร?", a:["Newton","Joule","Pascal","Watt"], correct:0, exp:"<b>Newton (N)</b> คือหน่วยของแรง ตั้งชื่อตาม เซอร์ ไอแซก นิวตัน"},
-    {q:"สูตรคำนวณความเร็วคือข้อใด?", a:["ระยะทาง ÷ เวลา","แรง ÷ เวลา","มวล × เวลา","พลังงาน ÷ เวลา"], correct:0, exp:"<b>ความเร็ว (v) = ระยะทาง (s) / เวลา (t)</b>"},
-    {q:"ค่าความเร่งเนื่องจากแรงโน้มถ่วงของโลกประมาณเท่าไร?", a:["9.8 m/s²","5 m/s²","15 m/s²","1 m/s²"], correct:0, exp:"ค่ามาตรฐาน <b>g</b> ของโลกมีค่าประมาณ <b>9.80665 m/s²</b>"},
-    {q:"หน่วยของกำลังคืออะไร?", a:["Watt","Newton","Volt","Joule"], correct:0, exp:"<b>Watt (W)</b> คือหน่วยของกำลัง (งานที่ทำได้ในหนึ่งหน่วยเวลา)"},
-    {q:"หน่วยของพลังงานคืออะไร?", a:["Joule","Volt","Pascal","Newton"], correct:0, exp:"<b>Joule (J)</b> คือหน่วยวัดพลังงานและงานในระบบ SI"},
-    {q:"สูตรของแรงตามกฎข้อที่สองของนิวตันคืออะไร?", a:["F = m × a","F = m × v","F = v × t","F = m ÷ t"], correct:0, exp:"<b>F = ma</b> หมายถึง แรงเท่ากับมวลคูณด้วยความเร่ง"},
-    {q:"หน่วยของความดันคืออะไร?", a:["Pascal","Newton","Joule","Volt"], correct:0, exp:"<b>Pascal (Pa)</b> คือแรง 1 นิวตันที่กระทำบนพื้นที่ 1 ตารางเมตร"},
-    {q:"สูตรคำนวณกำลังคือข้อใด?", a:["งาน ÷ เวลา","แรง ÷ เวลา","ระยะทาง ÷ เวลา","พลังงาน × เวลา"], correct:0, exp:"<b>P = W / t</b> กำลังคืองานที่ทำได้หารด้วยเวลาที่ใช้ไป"},
-    {q:"ความเร็วของแสงในสุญญากาศประมาณเท่าไร?", a:["3×10^8 m/s","3×10^5 m/s","300 m/s","30 m/s"], correct:0, exp:"แสงเดินทางด้วยความเร็วประมาณ <b>300,000,000 เมตรต่อวินาที</b>"},
-    {q:"หน่วยของกระแสไฟฟ้าคืออะไร?", a:["Ampere","Volt","Ohm","Watt"], correct:0, exp:"<b>Ampere (A)</b> คือหน่วยวัดปริมาณกระแสไฟฟ้าที่ไหลผ่านวงจร"},
-    {q:"แรงเสียดทานมีผลต่อการเคลื่อนที่อย่างไร?", a:["ทำให้วัตถุเคลื่อนที่ช้าลง","ทำให้วัตถุเร็วขึ้น","ทำให้วัตถุหนักขึ้น","ทำให้วัตถุเบาลง"], correct:0, exp:"แรงเสียดทานจะมีทิศทางตรงข้ามกับการเคลื่อนที่เสมอ"},
-    {q:"เสียงเดินทางเร็วที่สุดในตัวกลางชนิดใด?", a:["ของแข็ง","ของเหลว","อากาศ","สุญญากาศ"], correct:0, exp:"เสียงต้องการตัวกลาง และเดินทางได้ดีที่สุดใน <b>ของแข็ง</b> เพราะโมเลกุลชิดกันมาก"},
-    {q:"ความเร่งหมายถึงอะไร?", a:["การเปลี่ยนแปลงของความเร็ว","การเปลี่ยนแปลงของมวล","การเปลี่ยนแปลงของแรง","การเปลี่ยนแปลงของเวลา"], correct:0, exp:"<b>ความเร่ง (a)</b> คืออัตราการเปลี่ยนแปลงความเร็วต่อหนึ่งหน่วยเวลา"},
-    {q:"แม่เหล็กสามารถดูดโลหะชนิดใดได้ดีที่สุด?", a:["เหล็ก","ทอง","เงิน","ไม้"], correct:0, exp:"<b>เหล็ก (Iron)</b> เป็นสารเฟโรแมกเนติกที่ถูกแม่เหล็กดึงดูดได้แรงมาก"},
-    {q:"หน่วยของความถี่คืออะไร?", a:["Hertz","Newton","Volt","Watt"], correct:0, exp:"<b>Hertz (Hz)</b> คือจำนวนรอบที่เกิดขึ้นต่อหนึ่งวินาที"},
-    {q:"คลื่นกลต้องอาศัยอะไรในการเคลื่อนที่?", a:["ตัวกลาง","อากาศ","น้ำ","สุญญากาศ"], correct:0, exp:"คลื่นกล (เช่น เสียง) ต้องใช้ <b>ตัวกลาง</b> ในการส่งผ่านพลังงาน"},
-    {q:"ความยาวคลื่นคือระยะระหว่างอะไร?", a:["ยอดคลื่นถึงยอดคลื่นถัดไป","ความสูงของคลื่น","ช่วงเวลา","แรงของคลื่น"], correct:0, exp:"คือระยะทางระหว่างจุดที่ซ้ำกันของคลื่นที่อยู่ถัดกัน"},
-    {q:"วงจรไฟฟ้าจะทำงานได้เมื่อใด?", a:["เมื่อวงจรปิด","เมื่อวงจรเปิด","เมื่อไม่มีสายไฟ","เมื่อวงจรแตก"], correct:0, exp:"<b>วงจรปิด (Closed Circuit)</b> หมายถึงกระแสไฟฟ้าสามารถไหลได้ครบวงจร"},
-    {q:"แรงแม่เหล็กสามารถเกิดจากสิ่งใด?", a:["กระแสไฟฟ้า","เสียง","แสง","ความร้อน"], correct:0, exp:"เมื่อกระแสไฟฟ้าไหลผ่านเส้นลวดจะเกิด <b>สนามแม่เหล็ก</b> รอบๆ เส้นลวดนั้น"},
-    {q:"ถ้าแรงลัพธ์ที่กระทำต่อวัตถุเป็นศูนย์ วัตถุจะเป็นอย่างไร?", a:["หยุดนิ่งหรือเคลื่อนที่ด้วยความเร็วคงที่","เคลื่อนที่เร็วขึ้น","เคลื่อนที่ช้าลง","หยุดทันที"], correct:0, exp:"ตามกฎข้อที่ 1 ของนิวตัน (กฎของความเฉื่อย)"},
-    {q:"พลังงานจลน์ขึ้นอยู่กับปัจจัยใด?", a:["มวลและความเร็ว","เวลา","แรง","อุณหภูมิ"], correct:0, exp:"<b>Ek = ½mv²</b> พลังงานจลน์เกิดจากการเคลื่อนที่ของวัตถุ"},
-    {q:"พลังงานศักย์โน้มถ่วงขึ้นอยู่กับอะไร?", a:["ความสูงของวัตถุ","เวลา","แรง","อุณหภูมิ"], correct:0, exp:"<b>Ep = mgh</b> ยิ่งวัตถุอยู่สูงจากพื้นมาก ยิ่งมีพลังงานศักย์มาก"},
-    {q:"แรงโน้มถ่วงคือแรงประเภทใด?", a:["แรงดึงดูดระหว่างมวล","แรงผลัก","แรงแม่เหล็ก","แรงไฟฟ้า"], correct:0, exp:"มวลทุกชนิดในเอกภพจะออกแรงดึงดูดซึ่งกันและกัน"},
-    {q:"หน่วยของกำลังไฟฟ้าคืออะไร?", a:["Watt","Volt","Ampere","Ohm"], correct:0, exp:"<b>Watt (W)</b> ใช้เป็นหน่วยทั้งกำลังกลและกำลังไฟฟ้า"},
-    {q:"กระแสไฟฟ้าคือการเคลื่อนที่ของอะไร?", a:["อิเล็กตรอน","โปรตอน","นิวตรอน","อะตอม"], correct:0, exp:"ในตัวนำโลหะ กระแสไฟฟ้าเกิดจากการไหลของ <b>อิเล็กตรอนอิสระ</b>"}
-];
+let subject=""
+let questions=[]
+let shuffled=[]
+let current=0
+let score=0
+let selected=null
+let hasAnswered=false // ตัวแปรสำหรับป้องกันการเปลี่ยนคำตอบ
 
-// Chemistry Data with Explanations
-const chemistryQuestions = [
-    {q:"สูตรเคมีของน้ำคืออะไร?", a:["H2O","CO2","O2","H2"], correct:0, exp:"<b>H2O</b> ประกอบด้วย ไฮโดรเจน 2 อะตอม และออกซิเจน 1 อะตอม"},
-    {q:"สูตรเคมีของเกลือแกงคืออะไร?", a:["NaCl","KCl","CaCO3","Na2O"], correct:0, exp:"<b>NaCl</b> ย่อมาจาก Sodium Chloride (โซเดียมคลอไรด์)"},
-    {q:"สัญลักษณ์ธาตุของออกซิเจนคืออะไร?", a:["O","Ox","Og","On"], correct:0, exp:"ออกซิเจนใช้สัญลักษณ์ <b>O</b> มีเลขอะตอมเท่ากับ 8"},
-    {q:"สัญลักษณ์ธาตุของไฮโดรเจนคืออะไร?", a:["H","Hy","Hd","Hg"], correct:0, exp:"ไฮโดรเจนเป็นธาตุที่เบาที่สุดในตารางธาตุ ใช้สัญลักษณ์ <b>H</b>"},
-    {q:"ค่า pH ของสารที่เป็นกลางคือเท่าไร?", a:["7","5","9","1"], correct:0, exp:"<b>pH 7</b> คือกลาง, ต่ำกว่า 7 เป็นกรด, สูงกว่า 7 เป็นเบส"},
-    {q:"CO2 คือสารใด?", a:["คาร์บอนไดออกไซด์","ออกซิเจน","ไนโตรเจน","มีเทน"], correct:0, exp:"คือแก๊สที่เกิดจากการเผาไหม้สมบูรณ์และการหายใจออก"},
-    {q:"สัญลักษณ์ Na คือธาตุอะไร?", a:["โซเดียม","ทอง","เงิน","เหล็ก"], correct:0, exp:"<b>Na</b> มาจากภาษาละตินว่า Natrium (โซเดียม)"},
-    {q:"สัญลักษณ์ Fe คือธาตุอะไร?", a:["เหล็ก","ทอง","เงิน","สังกะสี"], correct:0, exp:"<b>Fe</b> มาจากภาษาละตินว่า Ferrum (เหล็ก)"},
-    {q:"สัญลักษณ์ Ag คือธาตุอะไร?", a:["เงิน","ทอง","เหล็ก","ตะกั่ว"], correct:0, exp:"<b>Ag</b> มาจากภาษาละตินว่า Argentum (เงิน)"},
-    {q:"สัญลักษณ์ Au คือธาตุอะไร?", a:["ทอง","เงิน","เหล็ก","ทองแดง"], correct:0, exp:"<b>Au</b> มาจากภาษาละตินว่า Aurum (ทอง)"},
-    {q:"น้ำแข็งอยู่ในสถานะของสสารใด?", a:["ของแข็ง","ของเหลว","แก๊ส","พลาสมา"], correct:0, exp:"น้ำแข็งคือสถานะ <b>Solid</b> ของน้ำ"},
-    {q:"ไอน้ำอยู่ในสถานะของสสารใด?", a:["แก๊ส","ของแข็ง","ของเหลว","โลหะ"], correct:0, exp:"เมื่อน้ำได้รับความร้อนจนถึงจุดเดือดจะกลายเป็นแก๊สเรียกว่า <b>ไอน้ำ</b>"},
-    {q:"เกลือแกง (NaCl) สามารถละลายในน้ำได้หรือไม่?", a:["ใช่","ไม่ใช่","บางครั้ง","ไม่รู้"], correct:0, exp:"เกลือเป็นสารประกอบไอออนิกที่ละลายในน้ำได้ดีมาก"},
-    {q:"แก๊ส O2 จำเป็นต่อกระบวนการใดของสิ่งมีชีวิต?", a:["การหายใจ","การกิน","การนอน","การเดิน"], correct:0, exp:"สิ่งมีชีวิตส่วนใหญ่ใช้ออกซิเจนในกระบวนการหายใจระดับเซลล์"},
-    {q:"สัญลักษณ์ของธาตุคาร์บอนคืออะไร?", a:["C","Ca","Co","Cu"], correct:0, exp:"<b>Carbon</b> ใช้สัญลักษณ์ C เป็นองค์ประกอบหลักของสารอินทรีย์"},
-    {q:"สัญลักษณ์ของธาตุไนโตรเจนคืออะไร?", a:["N","Na","Ne","Ni"], correct:0, exp:"<b>Nitrogen</b> ใช้สัญลักษณ์ N เป็นแก๊สที่มีมากที่สุดในอากาศ"},
-    {q:"สารที่เป็นกรดจะมีค่า pH แบบใด?", a:["pH ต่ำ","pH สูง","pH 7","ไม่เปลี่ยน"], correct:0, exp:"สารที่มีฤทธิ์เป็นกรดจะมีค่า pH อยู่ในช่วง <b>0 ถึงน้อยกว่า 7</b>"},
-    {q:"สารที่เป็นเบสจะมีค่า pH แบบใด?", a:["pH สูง","pH ต่ำ","pH 7","ไม่เปลี่ยน"], correct:0, exp:"สารที่มีฤทธิ์เป็นเบส (ด่าง) จะมีค่า pH อยู่ในช่วง <b>มากกว่า 7 ถึง 14</b>"},
-    {q:"สาร HCl จัดเป็นสารประเภทใด?", a:["กรด","เบส","เกลือ","โลหะ"], correct:0, exp:"<b>HCl</b> คือ กรดไฮโดรคลอริก หรือกรดเกลือ"},
-    {q:"สาร NaOH จัดเป็นสารประเภทใด?", a:["เบส","กรด","เกลือ","แก๊ส"], correct:0, exp:"<b>NaOH</b> คือ โซเดียมไฮดรอกไซด์ หรือโซดาไฟ มีฤทธิ์เป็นเบสแก่"},
-    {q:"CaCO3 พบมากในสารใด?", a:["หินปูน","เกลือ","น้ำ","กรด"], correct:0, exp:"<b>แคลเซียมคาร์บอเนต</b> เป็นส่วนประกอบหลักของหินปูนและเปลือกหอย"},
-    {q:"การเผาไหม้ต้องใช้แก๊สอะไร?", a:["O2","CO2","N2","H2"], correct:0, exp:"การเผาไหม้ต้องใช้เชื้อเพลิง ความร้อน และ <b>ออกซิเจน</b>"},
-    {q:"น้ำเดือดที่อุณหภูมิเท่าไร (ที่ความดันปกติ)?", a:["100°C","50","0","200"], correct:0, exp:"จุดเดือดของน้ำบริสุทธิ์อยู่ที่ <b>100 องศาเซลเซียส</b>"},
-    {q:"น้ำแข็งเริ่มละลายที่อุณหภูมิเท่าไร?", a:["0°C","10","50","100"], correct:0, exp:"จุดหลอมเหลวของน้ำบริสุทธิ์อยู่ที่ <b>0 องศาเซลเซียส</b>"},
-    {q:"สูตรเคมีของมีเทนคืออะไร?", a:["CH4","CO2","H2O","NH3"], correct:0, exp:"<b>CH4</b> เป็นแก๊สไฮโดรคาร์บอนที่ง่ายที่สุดและเป็นส่วนประกอบหลักของแก๊สธรรมชาติ"}
-];
+
 
 function shuffle(array){
-    for(let i=array.length-1;i>0;i--){
-        let j=Math.floor(Math.random()*(i+1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
+for(let i=array.length-1;i>0;i--){
+let j=Math.floor(Math.random()*(i+1))
+let temp=array[i]
+array[i]=array[j]
+array[j]=temp
 }
+return array
+}
+
+
 
 function startGame(type){
-    subject = type;
-    let pool = type === "physics" ? [...physicsQuestions] : [...chemistryQuestions];
-    shuffled = shuffle(pool).slice(0, 25);
-    current = 0;
-    score = 0;
-    document.getElementById("menu").classList.add("hidden");
-    document.getElementById("game").classList.remove("hidden");
-    showQuestion();
+subject=type
+if(type==="physics"){
+questions=[...physicsQuestions]
 }
+if(type==="chemistry"){
+questions=[...chemistryQuestions]
+}
+
+shuffle(questions)
+shuffled=questions.slice(0,25)
+current=0
+score=0
+
+document.getElementById("menu").classList.add("hidden")
+document.getElementById("game").classList.remove("hidden")
+
+showQuestion()
+}
+
+
 
 function showQuestion(){
-    selected = null;
-    isAnswered = false;
-    document.getElementById("nextBtn").classList.add("hidden");
-    document.getElementById("checkBtn").classList.remove("hidden");
-    document.getElementById("checkBtn").disabled = false;
-    document.getElementById("explanationBox").style.display = "none";
+selected=null
+hasAnswered=false
 
-    let q = shuffled[current];
-    document.getElementById("questionNumber").innerText = `ข้อ ${current + 1} / 25`;
-    document.getElementById("questionText").innerText = q.q;
+document.getElementById("nextBtn").classList.add("hidden")
+document.getElementById("checkBtn").classList.remove("hidden")
+document.getElementById("explanationBox").classList.add("hidden")
 
-    // Shuffle choices for display
-    let displayChoices = q.a.map((val, idx) => ({ text: val, originalIdx: idx }));
-    shuffle(displayChoices);
+let q=shuffled[current]
+document.getElementById("questionNumber").innerText="ข้อ "+(current+1)+" / 25"
+document.getElementById("questionText").innerText=q.q
 
-    let html = "";
-    displayChoices.forEach(c => {
-        html += `<button class="choice" onclick="selectChoice(this, '${c.text}')">${c.text}</button>`;
-    });
+let choices=[...q.a]
+shuffle(choices)
+let html=""
 
-    document.getElementById("choices").innerHTML = html;
-    document.getElementById("progressBar").style.width = ((current + 1) / 25 * 100) + "%";
+choices.forEach(c=>{
+html+=`<button class="choice" onclick="selectChoice(this,'${c}')">${c}</button>`
+})
+
+document.getElementById("choices").innerHTML=html
+document.getElementById("progressBar").style.width=((current+1)/25*100)+"%"
+
+// รีเซ็ตแอนิเมชัน
+let qText = document.getElementById("questionText");
+qText.classList.remove("fade");
+void qText.offsetWidth; // trigger reflow
+qText.classList.add("fade");
 }
 
-function selectChoice(el, val){
-    if(isAnswered) return;
-    document.querySelectorAll(".choice").forEach(b => b.classList.remove("selected"));
-    el.classList.add("selected");
-    selected = val;
+
+
+function selectChoice(el,val){
+if(hasAnswered) return; // ถ้าตอบไปแล้วจะไม่ให้เปลี่ยน
+
+document.querySelectorAll(".choice").forEach(b=>b.classList.remove("selected"))
+el.classList.add("selected")
+selected=val
 }
+
+
 
 function checkAnswer(){
-    if(selected == null || isAnswered) return;
-    
-    isAnswered = true;
-    let q = shuffled[current];
-    let correctValue = q.a[q.correct];
+if(selected==null || hasAnswered) return;
 
-    document.querySelectorAll(".choice").forEach(btn => {
-        btn.classList.add("locked");
-        if(btn.innerText === correctValue){
-            btn.classList.add("correct");
-        }
-        if(btn.innerText === selected && selected !== correctValue){
-            btn.classList.add("wrong");
-        }
-    });
+hasAnswered=true // ล็อคการตอบ
+let q=shuffled[current]
+let correct=q.a[q.correct]
 
-    if(selected === correctValue) score++;
+document.querySelectorAll(".choice").forEach(btn=>{
+btn.disabled = true; // ปิดปุ่มตัวเลือกไม่ให้กดได้อีก
 
-    // แสดงคำอธิบาย
-    document.getElementById("explanationText").innerHTML = q.exp;
-    document.getElementById("explanationBox").style.display = "block";
-    
-    document.getElementById("checkBtn").classList.add("hidden");
-    document.getElementById("nextBtn").classList.remove("hidden");
+if(btn.innerText===correct){
+btn.classList.add("correct")
 }
+if(btn.innerText===selected && selected!==correct){
+btn.classList.add("wrong")
+}
+})
+
+if(selected===correct) {
+score++;
+}
+
+// แสดงเฉลย
+document.getElementById("explanationText").innerText = q.exp || "ไม่มีคำอธิบายเพิ่มเติม";
+document.getElementById("explanationBox").classList.remove("hidden");
+
+// สลับปุ่มตรวจคำตอบเป็นปุ่มไปข้อถัดไป
+document.getElementById("checkBtn").classList.add("hidden")
+document.getElementById("nextBtn").classList.remove("hidden")
+}
+
+
 
 function nextQuestion(){
-    current++;
-    if(current >= 25){
-        finish();
-    } else {
-        showQuestion();
-    }
+current++
+if(current>=25){
+finish()
+return
+}
+showQuestion()
 }
 
+
+
 function finish(){
-    document.getElementById("game").classList.add("hidden");
-    document.getElementById("result").classList.remove("hidden");
-    let percent = Math.round((score / 25) * 100);
-    let subjectName = subject === "physics" ? "ฟิสิกส์" : "เคมี";
-    document.getElementById("subjectText").innerText = "วิชา " + subjectName;
-    document.getElementById("finalScore").innerText = `คะแนนของคุณคือ ${score} / 25 (${percent}%)`;
+document.getElementById("game").classList.add("hidden")
+document.getElementById("result").classList.remove("hidden")
+
+let percent=Math.round((score/25)*100)
+let subjectName=subject==="physics"?"ฟิสิกส์":"เคมี"
+
+document.getElementById("subjectText").innerText="สรุปผลคะแนนวิชา "+subjectName
+document.getElementById("finalScore").innerText= score+" / 25 ("+percent+"%)"
 }
+
+
+
+let physicsQuestions=[
+{q:"หน่วยของแรงในระบบ SI คืออะไร?",a:["Newton","Joule","Pascal","Watt"],correct:0, exp:"นิวตัน (Newton หรือ N) เป็นหน่วยมาตรฐานของแรง ตั้งชื่อเพื่อเป็นเกียรติแก่ เซอร์ไอแซก นิวตัน"},
+{q:"สูตรคำนวณความเร็วคือข้อใด?",a:["ระยะทาง ÷ เวลา","แรง ÷ เวลา","มวล × เวลา","พลังงาน ÷ เวลา"],correct:0, exp:"ความเร็ว (Velocity) หาได้จากอัตราส่วนระหว่างระยะทางที่เคลื่อนที่ได้ต่อหนึ่งหน่วยเวลา (v = s/t)"},
+{q:"ค่าความเร่งเนื่องจากแรงโน้มถ่วงของโลกประมาณเท่าไร?",a:["9.8 m/s²","5 m/s²","15 m/s²","1 m/s²"],correct:0, exp:"ความเร่งเนื่องจากแรงโน้มถ่วงของโลก (g) มีค่าเฉลี่ยประมาณ 9.8 m/s² หรือ 9.81 m/s²"},
+{q:"หน่วยของกำลังคืออะไร?",a:["Watt","Newton","Volt","Joule"],correct:0, exp:"วัตต์ (Watt) เป็นหน่วยของกำลัง ซึ่งหมายถึงอัตราการทำงานหรือใช้พลังงาน 1 จูลใน 1 วินาที"},
+{q:"หน่วยของพลังงานคืออะไร?",a:["Joule","Volt","Pascal","Newton"],correct:0, exp:"จูล (Joule หรือ J) เป็นหน่วยมาตรฐานสากลของทั้งงานและพลังงาน"},
+{q:"สูตรของแรงตามกฎข้อที่สองของนิวตันคืออะไร?",a:["F = m × a","F = m × v","F = v × t","F = m ÷ t"],correct:0, exp:"กฎการเคลื่อนที่ข้อที่ 2 ของนิวตัน กล่าวว่า แรงลัพธ์ = มวล × ความเร่ง (F = ma)"},
+{q:"หน่วยของความดันคืออะไร?",a:["Pascal","Newton","Joule","Volt"],correct:0, exp:"ปาสกาล (Pascal หรือ Pa) เป็นหน่วยของความดัน เท่ากับแรง 1 นิวตันที่กระทำตั้งฉากบนพื้นที่ 1 ตารางเมตร"},
+{q:"สูตรคำนวณกำลังคือข้อใด?",a:["งาน ÷ เวลา","แรง ÷ เวลา","ระยะทาง ÷ เวลา","พลังงาน × เวลา"],correct:0, exp:"กำลัง (Power) คือปริมาณงานที่ทำได้ในหนึ่งหน่วยเวลา หรือ P = W/t"},
+{q:"ความเร็วของแสงในสุญญากาศประมาณเท่าไร?",a:["3×10^8 m/s","3×10^5 m/s","300 m/s","30 m/s"],correct:0, exp:"ความเร็วแสงในสุญญากาศมีค่าคงที่ประมาณ 300,000,000 เมตร/วินาที หรือ 3×10^8 m/s"},
+{q:"หน่วยของกระแสไฟฟ้าคืออะไร?",a:["Ampere","Volt","Ohm","Watt"],correct:0, exp:"แอมแปร์ (Ampere หรือ A) เป็นหน่วยวัดปริมาณกระแสไฟฟ้าที่ไหลผ่านวงจร"},
+{q:"แรงเสียดทานมีผลต่อการเคลื่อนที่อย่างไร?",a:["ทำให้วัตถุเคลื่อนที่ช้าลง","ทำให้วัตถุเร็วขึ้น","ทำให้วัตถุหนักขึ้น","ทำให้วัตถุเบาลง"],correct:0, exp:"แรงเสียดทานมีทิศทางตรงข้ามกับการเคลื่อนที่เสมอ จึงทำให้วัตถุเคลื่อนที่ช้าลงหรือหยุดนิ่ง"},
+{q:"เสียงเดินทางเร็วที่สุดในตัวกลางชนิดใด?",a:["ของแข็ง","ของเหลว","อากาศ","สุญญากาศ"],correct:0, exp:"เสียงเป็นคลื่นกลที่ต้องอาศัยตัวกลาง และจะเดินทางผ่านของแข็งได้เร็วที่สุดเพราะโมเลกุลของของแข็งอยู่ชิดกันมากที่สุดทำให้ถ่ายโอนพลังงานได้ไว"},
+{q:"ความเร่งหมายถึงอะไร?",a:["การเปลี่ยนแปลงของความเร็ว","การเปลี่ยนแปลงของมวล","การเปลี่ยนแปลงของแรง","การเปลี่ยนแปลงของเวลา"],correct:0, exp:"ความเร่ง (Acceleration) คืออัตราการเปลี่ยนแปลงความเร็วของวัตถุในช่วงเวลาหนึ่ง"},
+{q:"แม่เหล็กสามารถดูดโลหะชนิดใดได้ดีที่สุด?",a:["เหล็ก","ทอง","เงิน","ไม้"],correct:0, exp:"แม่เหล็กจะดึงดูดสารแม่เหล็ก (Ferromagnetic materials) ได้ดี ซึ่งได้แก่ เหล็ก นิกเกิล และโคบอลต์"},
+{q:"หน่วยของความถี่คืออะไร?",a:["Hertz","Newton","Volt","Watt"],correct:0, exp:"เฮิรตซ์ (Hertz หรือ Hz) เป็นหน่วยของความถี่ บ่งบอกถึงจำนวนรอบการสั่นที่เกิดขึ้นในหนึ่งวินาที"},
+{q:"คลื่นกลต้องอาศัยอะไรในการเคลื่อนที่?",a:["ตัวกลาง","อากาศ","น้ำ","สุญญากาศ"],correct:0, exp:"คลื่นกล (เช่น คลื่นน้ำ คลื่นเสียง) จำเป็นต้องอาศัยอนุภาคของตัวกลางในการถ่ายโอนพลังงาน ไม่สามารถเคลื่อนที่ผ่านสุญญากาศได้"},
+{q:"ความยาวคลื่นคือระยะระหว่างอะไร?",a:["ยอดคลื่นถึงยอดคลื่นถัดไป","ความสูงของคลื่น","ช่วงเวลา","แรงของคลื่น"],correct:0, exp:"ความยาวคลื่น (Wavelength) คือระยะทางระหว่างจุดที่เฟสตรงกันของคลื่นที่อยู่ถัดกัน เช่น วัดจากสันคลื่นหนึ่งไปยังอีกสันคลื่นหนึ่ง"},
+{q:"วงจรไฟฟ้าจะทำงานได้เมื่อใด?",a:["เมื่อวงจรปิด","เมื่อวงจรเปิด","เมื่อไม่มีสายไฟ","เมื่อวงจรแตก"],correct:0, exp:"วงจรไฟฟ้าทำงานได้เมื่อเป็น 'วงจรปิด' (Closed circuit) คือมีการเชื่อมต่อกันครบวงจร ทำให้กระแสไฟฟ้าไหลจากขั้วบวกไปขั้วลบได้"},
+{q:"แรงแม่เหล็กสามารถเกิดจากสิ่งใด?",a:["กระแสไฟฟ้า","เสียง","แสง","ความร้อน"],correct:0, exp:"เมื่อมีกระแสไฟฟ้าไหลผ่านเส้นลวดตัวนำ จะเหนี่ยวนำให้เกิดสนามแม่เหล็กรอบๆ เส้นลวดนั้น (แม่เหล็กไฟฟ้า)"},
+{q:"ถ้าแรงลัพธ์ที่กระทำต่อวัตถุเป็นศูนย์ วัตถุจะเป็นอย่างไร?",a:["หยุดนิ่งหรือเคลื่อนที่ด้วยความเร็วคงที่","เคลื่อนที่เร็วขึ้น","เคลื่อนที่ช้าลง","หยุดทันที"],correct:0, exp:"ตามกฎข้อที่ 1 ของนิวตัน (กฎความเฉื่อย) หากไม่มีแรงลัพธ์มากระทำ วัตถุที่อยู่นิ่งจะอยู่นิ่งต่อไป และวัตถุที่เคลื่อนที่จะเคลื่อนที่ด้วยความเร็วคงที่"},
+{q:"พลังงานจลน์ขึ้นอยู่กับปัจจัยใด?",a:["มวลและความเร็ว","เวลา","แรง","อุณหภูมิ"],correct:0, exp:"พลังงานจลน์ (Kinetic energy) หาได้จากสูตร Ek = 1/2 mv² จึงขึ้นอยู่กับมวล (m) และความเร็ว (v) ของวัตถุ"},
+{q:"พลังงานศักย์โน้มถ่วงขึ้นอยู่กับอะไร?",a:["ความสูงของวัตถุ","เวลา","แรง","อุณหภูมิ"],correct:0, exp:"พลังงานศักย์โน้มถ่วง (Ep = mgh) ขึ้นอยู่กับมวลของวัตถุ, ความเร่งเนื่องจากแรงโน้มถ่วง, และความสูงจากระดับอ้างอิง"},
+{q:"แรงโน้มถ่วงคือแรงประเภทใด?",a:["แรงดึงดูดระหว่างมวล","แรงผลัก","แรงแม่เหล็ก","แรงไฟฟ้า"],correct:0, exp:"แรงโน้มถ่วง (Gravity) เป็นแรงดึงดูดที่เกิดขึ้นระหว่างมวลของวัตถุทุกชนิดในเอกภพ เช่น แรงที่โลกดึงดูดตัวเรา"},
+{q:"หน่วยของกำลังไฟฟ้าคืออะไร?",a:["Watt","Volt","Ampere","Ohm"],correct:0, exp:"วัตต์ (Watt) เป็นหน่วยวัดกำลังไฟฟ้า หมายถึงอัตราพลังงานไฟฟ้าที่อุปกรณ์นั้นใช้ไปในหนึ่งหน่วยเวลา"},
+{q:"กระแสไฟฟ้าคือการเคลื่อนที่ของอะไร?",a:["อิเล็กตรอน","โปรตอน","นิวตรอน","อะตอม"],correct:0, exp:"กระแสไฟฟ้าในโลหะตัวนำ เกิดจากการเคลื่อนที่ของอิเล็กตรอนอิสระจากศักย์ไฟฟ้าต่ำไปยังศักย์ไฟฟ้าสูง"}
+]
+
+let chemistryQuestions=[
+{q:"สูตรเคมีของน้ำคืออะไร?",a:["H2O","CO2","O2","H2"],correct:0, exp:"H2O คือสูตรเคมีของน้ำ 1 โมเลกุล ประกอบด้วยไฮโดรเจน 2 อะตอม และออกซิเจน 1 อะตอม"},
+{q:"สูตรเคมีของเกลือแกงคืออะไร?",a:["NaCl","KCl","CaCO3","Na2O"],correct:0, exp:"NaCl (โซเดียมคลอไรด์) คือเกลือแกงที่เราใช้ประกอบอาหาร ประกอบด้วยโซเดียมและคลอรีน"},
+{q:"สัญลักษณ์ธาตุของออกซิเจนคืออะไร?",a:["O","Ox","Og","On"],correct:0, exp:"O เป็นสัญลักษณ์ของธาตุออกซิเจน (Oxygen) ซึ่งเป็นก๊าซที่มีความสำคัญต่อการดำรงชีวิต"},
+{q:"สัญลักษณ์ธาตุของไฮโดรเจนคืออะไร?",a:["H","Hy","Hd","Hg"],correct:0, exp:"H เป็นสัญลักษณ์ของธาตุไฮโดรเจน (Hydrogen) ซึ่งเป็นธาตุที่เบาที่สุดในตารางธาตุ"},
+{q:"ค่า pH ของสารที่เป็นกลางคือเท่าไร?",a:["7","5","9","1"],correct:0, exp:"สเกล pH มีค่าตั้งแต่ 0-14 โดยสารที่มีค่า pH เท่ากับ 7 จะมีฤทธิ์เป็นกลาง เช่น น้ำบริสุทธิ์"},
+{q:"CO2 คือสารใด?",a:["คาร์บอนไดออกไซด์","ออกซิเจน","ไนโตรเจน","มีเทน"],correct:0, exp:"CO2 คือก๊าซคาร์บอนไดออกไซด์ เกิดจากการหายใจออกของสิ่งมีชีวิตและการเผาไหม้"},
+{q:"สัญลักษณ์ Na คือธาตุอะไร?",a:["โซเดียม","ทอง","เงิน","เหล็ก"],correct:0, exp:"Na มาจากคำว่า Natrium ในภาษาละติน ซึ่งก็คือธาตุโซเดียม (Sodium)"},
+{q:"สัญลักษณ์ Fe คือธาตุอะไร?",a:["เหล็ก","ทอง","เงิน","สังกะสี"],correct:0, exp:"Fe มาจากคำว่า Ferrum ในภาษาละติน ซึ่งก็คือธาตุเหล็ก (Iron)"},
+{q:"สัญลักษณ์ Ag คือธาตุอะไร?",a:["เงิน","ทอง","เหล็ก","ตะกั่ว"],correct:0, exp:"Ag มาจากคำว่า Argentum ในภาษาละติน ซึ่งก็คือธาตุเงิน (Silver)"},
+{q:"สัญลักษณ์ Au คือธาตุอะไร?",a:["ทอง","เงิน","เหล็ก","ทองแดง"],correct:0, exp:"Au มาจากคำว่า Aurum ในภาษาละติน ซึ่งก็คือธาตุทองคำ (Gold)"},
+{q:"น้ำแข็งอยู่ในสถานะของสสารใด?",a:["ของแข็ง","ของเหลว","แก๊ส","พลาสมา"],correct:0, exp:"น้ำแข็งคือน้ำที่อยู่ในสถานะของแข็ง (Solid) เมื่ออุณหภูมิลดต่ำกว่าจุดเยือกแข็ง (0°C)"},
+{q:"ไอน้ำอยู่ในสถานะของสสารใด?",a:["แก๊ส","ของแข็ง","ของเหลว","โลหะ"],correct:0, exp:"ไอน้ำคือน้ำที่ได้รับความร้อนจนเดือดและเปลี่ยนสถานะกลายเป็นแก๊ส (Gas)"},
+{q:"เกลือแกง (NaCl) สามารถละลายในน้ำได้หรือไม่?",a:["ใช่","ไม่ใช่","บางครั้ง","ไม่รู้"],correct:0, exp:"ใช่ เกลือแกงเป็นสารประกอบไอออนิกที่สามารถละลายและแตกตัวเป็นประจุบวกและลบในน้ำได้ดีมาก"},
+{q:"แก๊ส O2 จำเป็นต่อกระบวนการใดของสิ่งมีชีวิต?",a:["การหายใจ","การกิน","การนอน","การเดิน"],correct:0, exp:"ก๊าซออกซิเจน (O2) เป็นสิ่งจำเป็นในกระบวนการหายใจระดับเซลล์เพื่อนำไปเผาผลาญสารอาหารสร้างพลังงานให้ร่างกาย"},
+{q:"สัญลักษณ์ของธาตุคาร์บอนคืออะไร?",a:["C","Ca","Co","Cu"],correct:0, exp:"C เป็นสัญลักษณ์ของธาตุคาร์บอน (Carbon) ซึ่งเป็นองค์ประกอบพื้นฐานหลักของสิ่งมีชีวิตทุกชนิด"},
+{q:"สัญลักษณ์ของธาตุไนโตรเจนคืออะไร?",a:["N","Na","Ne","Ni"],correct:0, exp:"N เป็นสัญลักษณ์ของธาตุไนโตรเจน (Nitrogen) ซึ่งเป็นก๊าซที่มีปริมาณมากที่สุดในชั้นบรรยากาศโลก (ประมาณ 78%)"},
+{q:"สารที่เป็นกรดจะมีค่า pH แบบใด?",a:["pH ต่ำ","pH สูง","pH 7","ไม่เปลี่ยน"],correct:0, exp:"สารละลายที่มีฤทธิ์เป็นกรดจะมีค่า pH ต่ำกว่า 7 (ยิ่งค่าน้อย ยิ่งมีความเป็นกรดรุนแรง)"},
+{q:"สารที่เป็นเบสจะมีค่า pH แบบใด?",a:["pH สูง","pH ต่ำ","pH 7","ไม่เปลี่ยน"],correct:0, exp:"สารละลายที่มีฤทธิ์เป็นเบส (ด่าง) จะมีค่า pH สูงกว่า 7 ไปจนถึง 14"},
+{q:"สาร HCl จัดเป็นสารประเภทใด?",a:["กรด","เบส","เกลือ","โลหะ"],correct:0, exp:"HCl (กรดไฮโดรคลอริก หรือ กรดเกลือ) จัดเป็นกรดแก่ชนิดหนึ่ง พบได้ในน้ำย่อยของกระเพาะอาหาร"},
+{q:"สาร NaOH จัดเป็นสารประเภทใด?",a:["เบส","กรด","เกลือ","แก๊ส"],correct:0, exp:"NaOH (โซเดียมไฮดรอกไซด์ หรือ โซดาไฟ) เป็นสารประกอบที่มีฤทธิ์เป็นเบสแก่"},
+{q:"CaCO3 พบมากในสารใด?",a:["หินปูน","เกลือ","น้ำ","กรด"],correct:0, exp:"CaCO3 (แคลเซียมคาร์บอเนต) เป็นองค์ประกอบหลักของหินปูน เปลือกหอย และปะการัง"},
+{q:"การเผาไหม้ต้องใช้แก๊สอะไร?",a:["O2","CO2","N2","H2"],correct:0, exp:"การเผาไหม้ (Combustion) เป็นปฏิกิริยาเคมีที่จำเป็นต้องมีก๊าซออกซิเจน (O2) เพื่อให้เกิดการติดไฟ"},
+{q:"น้ำเดือดที่อุณหภูมิเท่าไร (ที่ความดันปกติ)?",a:["100°C","50","0","200"],correct:0, exp:"ที่ระดับน้ำทะเล (ความดัน 1 บรรยากาศ) น้ำบริสุทธิ์จะมีจุดเดือดที่อุณหภูมิ 100 องศาเซลเซียส"},
+{q:"น้ำแข็งเริ่มละลายที่อุณหภูมิเท่าไร?",a:["0°C","10","50","100"],correct:0, exp:"ที่ความดันบรรยากาศปกติ น้ำแข็งจะมีจุดหลอมเหลวกลายเป็นน้ำที่อุณหภูมิ 0 องศาเซลเซียส"},
+{q:"สูตรเคมีของมีเทนคืออะไร?",a:["CH4","CO2","H2O","NH3"],correct:0, exp:"CH4 คือสูตรทางเคมีของก๊าซมีเทน เป็นองค์ประกอบหลักของก๊าซธรรมชาติและเป็นก๊าซเรือนกระจกประเภทหนึ่ง"}
+]
+
 </script>
 
 </body>
